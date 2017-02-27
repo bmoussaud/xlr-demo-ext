@@ -1,0 +1,15 @@
+<?xml version="1.0" ?><udm.DeploymentPackage created-at="2014-09-11T10:20:26.124+0200" created-by="admin" id="Applications/Java/PetPortal/3.0-CD-20140911-102023" last-modified-at="2014-09-11T10:20:26.124+0200" last-modified-by="admin" token="3e770840-e019-4d01-9970-6140b9b76080">
+  <application ref="Applications/Java/PetPortal"/>
+  <orchestrator/>
+  <satisfiesReleaseNotes>true</satisfiesReleaseNotes>
+  <satisfiesPerformanceTested>false</satisfiesPerformanceTested>
+  <deployables>
+    <ci ref="Applications/Java/PetPortal/3.0-CD-20140911-102023/petclinic-backend"/>
+    <ci ref="Applications/Java/PetPortal/3.0-CD-20140911-102023/logger"/>
+    <ci ref="Applications/Java/PetPortal/3.0-CD-20140911-102023/petclinic"/>
+    <ci ref="Applications/Java/PetPortal/3.0-CD-20140911-102023/testPage"/>
+    <ci ref="Applications/Java/PetPortal/3.0-CD-20140911-102023/petclinicDS"/>
+    <ci ref="Applications/Java/PetPortal/3.0-CD-20140911-102023/sql"/>
+  </deployables>
+</udm.DeploymentPackage>
+

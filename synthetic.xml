@@ -1,0 +1,194 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+
+    THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS
+    FOR A PARTICULAR PURPOSE. THIS CODE AND INFORMATION ARE NOT SUPPORTED BY XEBIALABS.
+
+-->
+<synthetic xsi:schemaLocation="http://www.xebialabs.com/deployit/synthetic synthetic.xsd" 
+  xmlns="http://www.xebialabs.com/deployit/synthetic" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <type type="jenkins.ImportDarToXLD"  extends="xlrelease.PythonScript">
+    <property name="jenkinsServer" referenced-type="jenkins.Server" kind="ci" category="input" />
+    <property name="jobName" category="input"  />
+    <property name="pathInWorkspace" category="input"  />
+    <property name="packageVersion" category="output"  />
+    <property name="scriptLocation" default="jenkins/ImportToXLD.py" hidden="true" />
+    <property name="taskColor" hidden="true" default="#009CDB"/>
+  </type>
+
+  <type type="xld.UpdateChecklistValue"  extends="xlrelease.PythonScript">
+    <property name="scriptLocation" default="xld/UpdateCheckListValue.py" hidden="true" />
+    <property name="satisfiesProperty" category="input"  />
+    <property name="version" category="input"  />
+    <property name="taskColor" hidden="true" default="#009CDB"/>
+
+  </type>
+
+
+
+  <type type="xld.UpdateTicketChecklistValue"  extends="xlrelease.PythonScript">
+    <property name="scriptLocation" default="xld/UpdateTicketNumber.py" hidden="true" />
+    <property name="satisfiesProperty" category="input"  />
+    <property name="version" category="input"  />
+    <property name="jiraID" category="input"  />
+    <property name="taskColor" hidden="true" default="#009CDB"/>
+  </type>
+
+  <type type="tests.FunctionalTests"  extends="xlrelease.PythonScript">
+    <property name="scriptLocation" default="tests/run-functional-tests.py" hidden="true" />
+  </type>
+
+  <type type="tests.PerformanceTests"  extends="xlrelease.PythonScript">
+    <property name="scriptLocation" default="tests/run-performance-tests.py" hidden="true" />
+  </type>
+
+
+  <type type="tests.IntegrationTests"  extends="xlrelease.PythonScript">
+    <property name="scriptLocation" default="tests/run-integration-tests.py" hidden="true" />
+  </type>
+
+
+  <type type="puppet.Deploy" extends="remoteScript.Unix"/>
+
+  <type type="puppet.ApplyConfiguration" extends="remoteScript.Unix">
+    <property name="username" category="input"/>
+    <property name="password" password="true" category="input"/>
+    <property name="sudo" kind="boolean" category="input" default="false"/>
+    <property name="address" category="input"/>
+    <property name="remotePath" category="input" default="/tmp/vagrant-puppet-3"/>
+    <property name="script"  category="input" default="/usr/bin/ruby1.9.1 /usr/local/bin/puppet apply --modulepath modules-0:/etc/puppet/modules --hiera_config=hiera.yaml manifests/site.pp" hidden="true"/>
+
+    <property name="output" required="false" category="output" description="Console output of the process."/>
+    <property name="err" required="false" category="output" description="Error stream of the process."/>
+
+    <property name="scriptLocation" required="false" hidden="true" default="remoteScript/Unix.py" />
+    <property name="iconLocation" required="false" hidden="true" default="puppet/puppet.png" />
+    <property name="taskColor" hidden="true" default="#dd12a3"/>
+
+  </type>
+
+  <type type="xld.UpdateDictionary"  extends="xlrelease.PythonScript">
+    <property name="scriptLocation" default="xld/UpdateDictionary.py" hidden="true" />
+    <property name="startPort" category="input"  />
+    <property name="endPort" category="input"  />
+    <property name="dictionaryId" category="input"  />
+    <property name="taskColor" hidden="true" default="#009CDB"/>
+  </type>
+
+  <type type="cloud.NewHost" extends="xldeploy.ControlTask">
+    <property name="iconLocation" default="cloud/cloud.png" hidden="true"/>
+    <property name="scriptLocation" default="cloud/NewHost.py" hidden="true" />
+    <property name="taskColor" hidden="true" default="#5183E0"/>
+    <property name="controlTaskName" default="instantiate" category="input" hidden="true"/>
+    <property name="parameters" category="input" default="" required="false" description="A dictionary with key value pairs"  hidden="true"/>
+
+    <property name="instanceName"  category="input" />
+    <property name="hostsLocation" default="Infrastructure" category="input" />
+
+    <property name="numberOfPollingTrials" category="input" label="Polling Retry Count" required="true" default="90" kind="integer" description="Number of times to retry check for task status."/>
+    <property name="numberOfContinueRetrials" category="input" default="1" kind="integer" />
+  </type>
+
+  <type type="cloud.NewEnvironment" extends="xldeploy.ControlTask">
+    <property name="iconLocation" default="cloud/cloud.png" hidden="true"/>
+    <property name="scriptLocation" default="cloud/NewEnvironment.py" hidden="true" />
+    <property name="taskColor" hidden="true" default="#5183E0"/>
+    <property name="controlTaskName" default="instantiate" category="input" hidden="true"/>
+    <property name="parameters" category="input" default="" required="false" description="A dictionary with key value pairs"  hidden="true"/>
+
+    <property name="environmentId" default="Environments/Cloud" category="input" />
+    <property name="hostsPath" default="Infrastructure" category="input" />
+
+    <property name="numberOfPollingTrials" category="input" label="Polling Retry Count" required="true" default="90" kind="integer" description="Number of times to retry check for task status."/>
+    <property name="numberOfContinueRetrials" category="input" default="1" kind="integer" />
+
+  </type>
+
+  <type type="cloud.DestroyEnvironment" extends="xldeploy.ControlTask">
+    <property name="iconLocation" default="cloud/cloud.png" hidden="true"/>
+    <property name="scriptLocation" default="cloud/DestroyEnvironment.py" hidden="true" />
+    <property name="taskColor" hidden="true" default="#5183E0"/>
+    <property name="controlTaskName" default="destroy" category="input" hidden="true"/>
+    <property name="parameters" category="input" default="" required="false" description="A dictionary with key value pairs"  hidden="true"/>
+
+    <property name="numberOfPollingTrials" category="input" label="Polling Retry Count" required="true" default="90" kind="integer" description="Number of times to retry check for task status."/>
+    <property name="numberOfContinueRetrials" category="input" default="1" kind="integer" />
+
+  </type>
+
+  <type type="cloud.UnlinkConfiguration" extends="xldeploy.ControlTask">
+    <property name="iconLocation" default="cloud/cloud.png" hidden="true"/>
+    <property name="scriptLocation" default="cloud/UnlinkConfiguration.py" hidden="true" />
+    <property name="taskColor" hidden="true" default="#5183E0"/>
+    <property name="controlTaskName" default="deleteAssociatedDictionaries" category="input" hidden="true"/>
+    <property name="parameters" category="input" default="" required="false" description="A dictionary with key value pairs"  hidden="true"/>
+
+    <property name="numberOfPollingTrials" category="input" label="Polling Retry Count" required="true" default="90" kind="integer" description="Number of times to retry check for task status."/>
+    <property name="numberOfContinueRetrials" category="input" default="1" kind="integer" />
+
+  </type>
+
+  <type-modification type="git.Poll">
+    <property name="triggeredDate" category="variables" required="false" />
+    <property name="template_variable_customer" category="variables" required="false" />
+  </type-modification>
+
+  <!--
+
+ <type type="ansible.Task" extends="xlrelease.PythonScript">
+    <property name="iconLocation" default="ansible/ansible_logo.png" hidden="true"/>
+    <property name="taskColor" hidden="true" default="#64c5c7"/>
+  </type>
+
+ <type type="hpoo.Job" extends="xlrelease.PythonScript">
+    <property name="iconLocation" default="hpoo/hpoo.png" hidden="true"/>
+    <property name="taskColor" hidden="true" default="#00bfff"/>
+  </type>
+
+ <type type="sap.Transport" extends="xlrelease.PythonScript">
+   <property name="taskColor" hidden="true" default="#00bfff"/>
+   <property name="sapServer" category="input"/>
+   <property name="module" category="input"/>
+   <property name="status" category="output"/>
+ </type>
+ <type type="deployment.DoDeploy"  extends="xlrelease.PythonScript">
+   <property name="scriptLocation" default="deployment/DoDeploy.py" hidden="true" />
+   <property name="taskColor" hidden="true" default="#ff6666"/>
+   <property name="environment" category="input"  />
+   <property name="package" category="input" />
+   <property name="parameter1" category="input" />
+   <property name="parameter2" category="input" />
+   <property name="status" category="output" />
+ </type>
+
+ <type type="mycompany.SharedConfiguration" extends="xlrelease.Configuration"/>
+
+ <type type="mycompany.Client" extends="configuration.HttpConnection">
+   <property name="longName" />
+   <property name="shortName" />
+ </type>
+ <type type="mycompany.ChooseClient" extends="xlrelease.PythonScript">
+   <property name="client" kind="ci" referenced-type="mycompany.Client" category="input"/>
+   <property name="shortName" category="output"/>
+   <property name="longName" category="output"/>
+ </type>
+
+ 
+-->
+ <type type="delphix.Server" extends="configuration.HttpConnection">
+ </type>
+<type type="delphix.LoadData" extends="xlrelease.PythonScript">
+   <property name="server" kind="ci" referenced-type="delphix.Server" category="input"/>
+   <property name="dataVersion" category="input"/>
+   <property name="status" category="output"/>
+ </type>
+
+
+
+ 
+
+
+
+</synthetic>
