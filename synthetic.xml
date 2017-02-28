@@ -26,6 +26,26 @@
 
   </type>
 
+  <type type="xld.GenerateDeploymentTasks" extends="xlrelease.PythonScript">
+    <property name="iconLocation" default="xldeploy/xl-deploy.svg" hidden="true" />
+    <property name="taskColor" hidden="true" default="#68B749" />
+    <property name="server" category="input" label="Server" referenced-type="xldeploy.XLDeployServer" kind="ci" description="XL Deploy server to connect to."/>
+    <property name="deployments" category="input" kind="map_string_string"/>
+    <property name="undeploy" category="input" kind="boolean" default="false" />
+  </type>
+
+
+  <type type="xld.ComputePromotedVersions" extends="xlrelease.PythonScript">
+    <property name="iconLocation" default="xldeploy/xl-deploy.svg" hidden="true" />
+    <property name="taskColor" hidden="true" default="#68B749" />
+    <property name="server" category="input" label="Server" referenced-type="xldeploy.XLDeployServer" kind="ci" description="XL Deploy server to connect to."/>
+    <property name="source"        category="input" default="" />
+    <property name="destination"   category="input" default="" />
+
+    <property name="deployments"   category="output" kind="map_string_string"/>
+    <property name="undeployments" category="output" kind="map_string_string"/>
+  </type>
+
 
 
   <type type="xld.UpdateTicketChecklistValue"  extends="xlrelease.PythonScript">
@@ -175,11 +195,11 @@
    <property name="longName" category="output"/>
  </type>
 
- 
+
 -->
  <type type="delphix.Server" extends="configuration.HttpConnection">
  </type>
-<type type="delphix.LoadData" extends="xlrelease.PythonScript">
+ <type type="delphix.LoadData" extends="xlrelease.PythonScript">
    <property name="server" kind="ci" referenced-type="delphix.Server" category="input"/>
    <property name="dataVersion" category="input"/>
    <property name="status" category="output"/>
@@ -187,7 +207,7 @@
 
 
 
- 
+
 
 
 
